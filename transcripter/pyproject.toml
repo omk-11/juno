@@ -1,0 +1,14 @@
+[project]
+name = "juno-transcript"
+version = "0.1.0"
+dependencies = ["faster-whisper", "requests", "fastapi", "uvicorn"]
+
+[project.scripts]
+juno-transcript = "src.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
