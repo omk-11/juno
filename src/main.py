@@ -1,7 +1,16 @@
 from fastapi import FastAPI
-from .scraper.event_controller import router as event_router
-from .transcripter.transcript_controller import router as transcript_router
-from .content_writer.content_writer_controller import router as content_router
+
+# Import routers robustly so the app works whether `src` is a package
+# or the working directory. Try package-relative imports first, then
+# fall back to top-level imports used in some deployment environments.
+try:
+	from .scraper.event_controller import router as event_router
+	from .transcripter.transcript_controller import router as transcript_router
+	from .content_writer.content_writer_controller import router as content_router
+except Exception:
+	from scraper.event_controller import router as event_router
+	from transcripter.transcript_controller import router as transcript_router
+	from content_writer.content_writer_controller import router as content_router
 
 app= FastAPI()
 

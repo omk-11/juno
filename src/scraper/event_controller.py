@@ -5,7 +5,10 @@ from fastapi import APIRouter, HTTPException, Query
 from fastapi.concurrency import run_in_threadpool
 from pydantic import BaseModel
 
-from .event_scraper import run_search, run_groups, DEFAULT_PUNE_GROUPS
+try:
+    from .event_scraper import run_search, run_groups, DEFAULT_PUNE_GROUPS
+except Exception:
+    from event_scraper import run_search, run_groups, DEFAULT_PUNE_GROUPS
 
 router = APIRouter()
 
