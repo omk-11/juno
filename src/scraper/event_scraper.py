@@ -208,7 +208,14 @@ def run_search(keywords: str = "", location: str = "in--pune",
                 max_events: int = 10, headless: bool = True) -> list[dict]:
     """Importable entrypoint: search-mode scrape, owns its own browser lifecycle."""
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=headless)
+        browser = p.chromium.launch(
+            headless=headless,
+            args=[
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage",
+            ],
+        )
         context = browser.new_context(user_agent=DEFAULT_USER_AGENT)
         page = _new_page(context)
         try:
@@ -223,7 +230,14 @@ def run_groups(groups: list[str] | None = None, max_events: int = 10,
     groups = groups if groups else DEFAULT_PUNE_GROUPS
     all_events = []
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=headless)
+        browser = p.chromium.launch(
+            headless=headless,
+            args=[
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage",
+            ],
+        )
         context = browser.new_context(user_agent=DEFAULT_USER_AGENT)
         page = _new_page(context)
         try:
