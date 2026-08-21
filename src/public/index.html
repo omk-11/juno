@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Juno — Content Ops</title>
+<link rel="icon" href="data:," />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Left rail -->
+  <aside class="rail">
+    <div class="rail-brand">
+      <span class="rail-brand-mark">J</span>
+      <span class="rail-brand-text">JUNO</span>
+    </div>
+    <nav class="rail-nav">
+      <button class="rail-btn active" data-panel="events">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm-2 8h14v10H5V10z"/></svg>
+        <span>Events</span>
+      </button>
+      <button class="rail-btn" data-panel="transcribe">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/></svg>
+        <span>Transcribe</span>
+      </button>
+      <button class="rail-btn" data-panel="content">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M4 4h16v2H4V4zm0 5h16v2H4V9zm0 5h10v2H4v-2zm0 5h10v2H4v-2zm13-6l5 3.5L17 20V13z"/></svg>
+        <span>Content</span>
+      </button>
+    </nav>
+    <button class="rail-btn rail-settings" id="openSettings">
+      <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19.14 12.94a7.14 7.14 0 0 0 .06-.94 7.14 7.14 0 0 0-.06-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.3 7.3 0 0 0-1.63-.94l-.36-2.54a.5.5 0 0 0-.5-.42h-3.84a.5.5 0 0 0-.5.42l-.36 2.54a7.3 7.3 0 0 0-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.7 8.84a.5.5 0 0 0 .12.64l2.03 1.58a7.14 7.14 0 0 0 0 1.88L2.82 14.5a.5.5 0 0 0-.12.64l1.92 3.32a.5.5 0 0 0 .6.22l2.39-.96c.5.4 1.05.71 1.63.94l.36 2.54a.5.5 0 0 0 .5.42h3.84a.5.5 0 0 0 .5-.42l.36-2.54c.58-.23 1.13-.55 1.63-.94l2.39.96a.5.5 0 0 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.56zM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7z"/></svg>
+      <span>Settings</span>
+    </button>
+  </aside>
+
+  <div class="main">
+
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-title" id="panelTitle">Events</div>
+      <div class="topbar-status">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">checking API…</span>
+      </div>
+    </header>
+
+    <!-- EVENTS PANEL -->
+    <section class="panel active" id="panel-events">
+      <div class="toolbar">
+        <input type="text" id="ev-keywords" placeholder="keyword filter (optional)" />
+        <input type="number" id="ev-max" value="10" min="1" max="50" title="max events" />
+        <label class="checkbox">
+          <input type="checkbox" id="ev-refresh" />
+          <span>bypass cache</span>
+        </label>
+        <button class="btn btn-primary" id="ev-search">Search Pune meetups</button>
+      </div>
+      <details class="groups-toggle">
+        <summary>Scrape specific group URLs instead</summary>
+        <div class="toolbar">
+          <textarea id="ev-groups" rows="2" placeholder="one meetup group URL per line"></textarea>
+          <button class="btn" id="ev-search-groups">Scrape groups</button>
+        </div>
+      </details>
+      <div id="ev-status" class="hint"></div>
+      <div class="event-grid" id="ev-results"></div>
+    </section>
+
+    <!-- TRANSCRIBE PANEL -->
+    <section class="panel" id="panel-transcribe">
+      <div class="toolbar">
+        <input type="text" id="tr-path" placeholder="/path/to/video.mp4" />
+        <button class="btn btn-primary" id="tr-run">Transcribe</button>
+      </div>
+      <div id="tr-status" class="hint"></div>
+      <div class="transcript-box" id="tr-result" hidden>
+        <div class="transcript-actions">
+          <button class="btn btn-ghost" id="tr-copy">Copy text</button>
+          <button class="btn btn-primary" id="tr-send">Send to Content →</button>
+        </div>
+        <div class="transcript-segments" id="tr-segments"></div>
+      </div>
+    </section>
+
+    <!-- CONTENT PANEL -->
+    <section class="panel" id="panel-content">
+      <div class="toolbar toolbar-column">
+        <textarea id="ct-input" rows="6" placeholder="Paste timestamped transcription here, or send one from the Transcribe tab…"></textarea>
+        <button class="btn btn-primary" id="ct-run">Generate content ideas</button>
+      </div>
+      <div id="ct-status" class="hint"></div>
+      <div class="content-output" id="ct-output"></div>
+    </section>
+
+  </div>
+</div>
+
+<!-- Settings modal -->
+<div class="modal hidden" id="settingsModal">
+  <div class="modal-card">
+    <h2>Settings</h2>
+    <label class="field-label">Backend API base URL</label>
+    <input type="text" id="apiBaseInput" placeholder="http://127.0.0.1:8000" />
+    <p class="hint">Points at your <code>src.main:app</code> deployment. Must expose <code>/api/events</code>, <code>/api/transcript</code>, and <code>/api/content</code> with CORS enabled for this origin.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="closeSettings">Cancel</button>
+      <button class="btn btn-primary" id="saveSettings">Save</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

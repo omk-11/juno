@@ -1,0 +1,18 @@
+# Core web framework
+fastapi
+uvicorn[standard]
+
+# HTTP client
+requests
+
+# Playwright for scraping (requires `playwright install` to fetch browsers)
+playwright
+
+# LLM / Anthropic client
+anthropic
+python-dotenv
+
+# Typing and model libraries
+pydantic
+typing-extensions
+
