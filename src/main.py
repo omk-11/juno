@@ -17,3 +17,7 @@ app= FastAPI()
 app.include_router(event_router, prefix="/api/events", tags=["events"])
 app.include_router(transcript_router, prefix='/api/transcript',tags=["transcription"])
 app.include_router(content_router, prefix='/api/content',tags=["content", "llm"]) 
+
+@app.get("/")
+def root():
+    return {"status": "Juno API is running"}
