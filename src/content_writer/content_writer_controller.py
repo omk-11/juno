@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from content_writter import generate_content_ideas
+from .content_writter import generate_content_ideas
 from pydantic import BaseModel
 
 router=APIRouter()

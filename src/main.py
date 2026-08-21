@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from scraper.event_controller import router as event_router
-from transcripter.transcript_controller import router as transcript_router
-from content_writer.content_writer_controller import router as content_router
+from .scraper.event_controller import router as event_router
+from .transcripter.transcript_controller import router as transcript_router
+from .content_writer.content_writer_controller import router as content_router
 
 app= FastAPI()
 

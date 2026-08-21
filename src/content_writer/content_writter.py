@@ -1,4 +1,4 @@
-from utils.llm_call import call_llm
+from ..utils.llm_call import call_llm
 
 def prompt_designer(transcription: str):
     pass
